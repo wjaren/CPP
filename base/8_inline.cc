@@ -15,10 +15,10 @@
 inline int max(int a, int b) { return a > b ? a : b; }
 
 int main() {
-    int a = MAX(10, 5) + 1; // This will expand to (10) > (5) ? (10) : (5) + 1
+    int a = MAX(10, 5) + 1;                                  // This will expand to (10) > (5) ? (10) : (5) + 1
     std::cout << "The maximum value is: " << a << std::endl; // 10
 
-    int b = max(10, 5) + 1; // This will call the inline function max
+    int b = max(10, 5) + 1;                                  // This will call the inline function max
     std::cout << "The maximum value is: " << b << std::endl; // 11
     return 0;
 }

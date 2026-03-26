@@ -2,36 +2,36 @@
 #include <string>
 
 namespace MyNamespace {
-std::string name = "MyNamespace";
-void displayMessage() { std::cout << "Hello from MyNamespace!" << std::endl; }
+    std::string name = "MyNamespace";
+    void displayMessage() { std::cout << "Hello from MyNamespace!" << std::endl; }
 } // namespace MyNamespace
 
 namespace AnotherNamespace {
-std::string name = "AnotherNamespace";
-void displayMessage() {
-    std::cout << "Hello from AnotherNamespace!" << std::endl;
-}
+    std::string name = "AnotherNamespace";
+    void displayMessage() {
+        std::cout << "Hello from AnotherNamespace!" << std::endl;
+    }
 } // namespace AnotherNamespace
 
 namespace OuterNamespace {
-std::string name = "OuterNamespace";
-namespace InnerNamespace {
-std::string name = "InnerNamespace";
-void displayMessage() {
-    std::cout << "Hello from InnerNamespace!" << std::endl;
-}
-} // namespace InnerNamespace
-void displayMessage() {
-    std::cout << "Hello from OuterNamespace!" << std::endl;
-}
+    std::string name = "OuterNamespace";
+    namespace InnerNamespace {
+        std::string name = "InnerNamespace";
+        void displayMessage() {
+            std::cout << "Hello from InnerNamespace!" << std::endl;
+        }
+    } // namespace InnerNamespace
+    void displayMessage() {
+        std::cout << "Hello from OuterNamespace!" << std::endl;
+    }
 } // namespace OuterNamespace
 
 namespace {
-// This is an unnamed namespace, which gives internal linkage to its members.
-std::string name = "UnnamedNamespace";
-void displayMessage() {
-    std::cout << "Hello from the unnamed namespace!" << std::endl;
-}
+    // This is an unnamed namespace, which gives internal linkage to its members.
+    std::string name = "UnnamedNamespace";
+    void displayMessage() {
+        std::cout << "Hello from the unnamed namespace!" << std::endl;
+    }
 
 } // namespace
 

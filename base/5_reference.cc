@@ -13,8 +13,8 @@ int main() {
     std::cout << "lref: " << lref << std::endl; // output: 10
     lref = 20;                                  // modify x through lref
     std::cout << "x: " << x << std::endl;       // output: 20
-    lref = x; // assign x to itself through lref, no change
-    std::cout << "x: " << x << std::endl; // output: 20
+    lref = x;                                   // assign x to itself through lref, no change
+    std::cout << "x: " << x << std::endl;       // output: 20
 
     int *p = &x; // pointer to x
     std::cout << "&p: " << &p << ", p: " << p << ", *p: " << *p

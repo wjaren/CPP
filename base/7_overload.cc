@@ -64,8 +64,8 @@ int main() {
     print(42);   // calls print(int), parameter is int
     print(3.14); // calls print(double), parameter is double
 
-    default_print();  // calls default_print(int, int) with default parameters
-    default_print(5); // calls default_print(int, int) with a = 5
+    default_print();      // calls default_print(int, int) with default parameters
+    default_print(5);     // calls default_print(int, int) with a = 5
     default_print(5, 10); // calls default_print(int, int) with a = 5 and b = 10
 
     return 0;

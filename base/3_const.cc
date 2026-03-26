@@ -32,7 +32,5 @@ int main() {
     // p4 = &num1; // error: assignment of read-only variable 'p4'
     // *p4 = 40; // error: assignment of read-only location '*p4'
 
-    
-
-    return 0;
+        return 0;
 }
