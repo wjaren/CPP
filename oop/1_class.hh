@@ -3,7 +3,7 @@
 
 class MyHeadClass {
 public:
-    void myHeadFunction(); // class member function declaration
+    void myHeadFunction(); // 类成员函数声明
 };
 
 #endif // MY_CLASS_H

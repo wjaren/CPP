@@ -13,15 +13,15 @@ int main() {
 
     try {
         divide(10, 0);
-        // Simulate an error
+        // 模拟一个错误
         throw std::runtime_error("An error occurred");
     } catch (const int e) {
         std::cerr << "Caught exception: " << e << std::endl;
     } catch (const char *e) {
-        // Handle the exception
+        // 处理异常
         std::cerr << "Caught exception: " << e << std::endl;
     } catch (const std::exception &e) {
-        // Handle the exception
+        // 处理异常
         std::cerr << "Caught exception: " << e.what() << std::endl;
     }
 

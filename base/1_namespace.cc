@@ -27,7 +27,7 @@ namespace OuterNamespace {
 } // namespace OuterNamespace
 
 namespace {
-    // This is an unnamed namespace, which gives internal linkage to its members.
+    // 这是一个未命名命名空间，其成员具有内部链接属性。
     std::string name = "UnnamedNamespace";
     void displayMessage() {
         std::cout << "Hello from the unnamed namespace!" << std::endl;
@@ -41,22 +41,22 @@ namespace {
 // }
 
 int main() {
-    MyNamespace::displayMessage();
-    std::cout << "Name in MyNamespace: " << MyNamespace::name << std::endl;
+    MyNamespace::displayMessage();                                          // 调用 MyNamespace 中的函数
+    std::cout << "Name in MyNamespace: " << MyNamespace::name << std::endl; // 访问 MyNamespace 中的变量
 
-    AnotherNamespace::displayMessage();
+    AnotherNamespace::displayMessage(); // 调用 AnotherNamespace 中的函数
     std::cout << "Name in AnotherNamespace: " << AnotherNamespace::name
-              << std::endl;
+              << std::endl; // 访问 AnotherNamespace 中的变量
 
-    OuterNamespace::InnerNamespace::displayMessage();
+    OuterNamespace::InnerNamespace::displayMessage(); // 调用 OuterNamespace::InnerNamespace 中的函数
     std::cout << "Name in InnerNamespace: "
-              << OuterNamespace::InnerNamespace::name << std::endl;
+              << OuterNamespace::InnerNamespace::name << std::endl; // 访问 OuterNamespace::InnerNamespace 中的变量
 
-    OuterNamespace::displayMessage();
+    OuterNamespace::displayMessage(); // 调用 OuterNamespace 中的函数
     std::cout << "Name in OuterNamespace: " << OuterNamespace::name
-              << std::endl;
+              << std::endl; //
 
-    displayMessage(); // Calls the function from the unnamed namespace
+    displayMessage(); // 调用未命名命名空间中的函数
     std::cout << "Name in the unnamed namespace: " << name << std::endl;
 
     return 0;

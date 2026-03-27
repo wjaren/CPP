@@ -1,23 +1,18 @@
 #include <iostream>
 
 /**
- * oop is a programming paradigm that uses "objects" to design applications and computer programs.
- * It utilizes several techniques from previously established paradigms, including modularity,
- * polymorphism, and encapsulation.
- * The main goal of OOP is to bind together the data and the functions that operate on that data,
- * so that no other part of the code can access this data except that function.
+ * OOP（面向对象编程）是一种使用“对象”来设计程序的编程范式。
+ * 它吸收了早期范式中的多种思想，包括模块化、多态和封装。
+ * OOP 的核心目标是把数据与操作这些数据的函数绑定在一起，从而限制外部代码对数据的直接访问。
  *
- * modularity:
- * the source code for an object can be written and maintained independently of the source
- * code for other objects.
- * 
- * polymorphism:
- * the ability of different objects to respond, each in its own way, to identical
- * messages (or methods).
- * 
- * encapsulation:
- * the bundling of data with the methods that operate on that data, or the restricting
- * of direct access to some of an object's components.
+ * 模块化（modularity）：
+ * 一个对象的源码可以独立于其他对象进行编写和维护。
+ *
+ * 多态（polymorphism）：
+ * 不同对象可以用各自的方式响应相同的消息（或方法调用）。
+ *
+ * 封装（encapsulation）：
+ * 将数据与操作数据的方法打包在一起，或限制对对象部分成员的直接访问。
  */
 
 class Animal {
@@ -44,20 +39,20 @@ public:
 };
 
 int main() {
-    Animal animal;     // Create an instance of the Animal class
-    animal.behavior(); // Call the behavior method of the Animal class
+    Animal animal;     // 创建 Animal 类实例
+    animal.behavior(); // 调用 Animal 类的 behavior 方法
 
-    Dog dog;        // Create an instance of the Dog class
-    dog.behavior(); // Call the behavior method of the Dog class (inherited from Animal)
+    Dog dog;        // 创建 Dog 类实例
+    dog.behavior(); // 调用 Dog 的 behavior 方法（继承自 Animal）
 
-    Cat cat;                 // Create an instance of the Cat class
-    cat.setName("Whiskers"); // Set the name of the cat using the setName method
+    Cat cat;                 // 创建 Cat 类实例
+    cat.setName("Whiskers"); // 使用 setName 方法设置猫的名字
     std::cout << "The cat's name is: "
-              << cat.getName() << std::endl; // Get the name of the cat using the getName method
+              << cat.getName() << std::endl; // 使用 getName 方法获取猫的名字
 
-    animal.eat(); // Call the eat method of the Animal class
-    dog.eat();    // Call the eat method of the Dog class (overridden from Animal)
-    cat.eat();    // Call the eat method of the Cat class (overridden from Animal)
+    animal.eat(); // 调用 Animal 类的 eat 方法
+    dog.eat();    // 调用 Dog 类的 eat 方法（重写自 Animal）
+    cat.eat();    // 调用 Cat 类的 eat 方法（重写自 Animal）
 
     return 0;
 }
