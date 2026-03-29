@@ -35,7 +35,7 @@ void init() {
 }
 
 // 枚举所有的数对，判断是否满足条件
-void slove1() {
+void solve_eg1() {
     int ans = 0;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -48,7 +48,7 @@ void slove1() {
 }
 
 // 优化范围
-void slove2() {
+void solve_eg2() {
     int ans = 0;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < i; ++j) {
@@ -62,7 +62,7 @@ void slove2() {
 }
 
 // hash 表优化
-void slove3() {
+void solve_eg3() {
     int ans = 0;
     std::unordered_set<int> s(arr.begin(), arr.end());
     for (int i = 0; i < n; ++i) {
@@ -74,7 +74,7 @@ void slove3() {
 }
 
 /**
- * 2811:熄灯问题
+ * 2811: 熄灯问题 - OpenJudge
  * 有一个由按钮组成的矩阵，其中每行有6个按钮，共5行。每个按钮的位置上有一盏灯。
  * 当按下一个按钮后，该按钮以及周围位置(上边、下边、左边、右边)的灯都会改变一次。
  * 即，如果灯原来是点亮的，就会被熄灭；如果灯原来是熄灭的，则会被点亮。
@@ -86,7 +86,7 @@ void slove3() {
  * 输出:
  * 5行组成，每一行包括6个数字（0或1）。相邻两个数字之间用单个空格隔开。其中的1表示需要把对应的按钮按下，0则表示不需要按对应的按钮。
  */
-void slove() {
+void solve() {
     std::vector<std::vector<int>> grid =
         {{0, 1, 1, 0, 1, 0},
          {1, 0, 0, 1, 1, 1},
@@ -149,11 +149,11 @@ void slove() {
 
 int main() {
     // init();
-    // slove1();
-    // slove2();
-    // slove3();
+    // solve_eg1();
+    // solve_eg2();
+    // solve_eg3();
 
-    slove();
+    solve();
 
     return 0;
 }
