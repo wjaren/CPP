@@ -48,6 +48,20 @@ void MyHeadClass::myHeadFunction() { // 类成员函数定义
     std::cout << "This is the myHeadFunction() method of MyHeadClass." << std::endl;
 }
 
+/**
+ * C++ 中的 struct（结构体）是一种用户定义的数据类型，用于将不同类型的数据组合在一起。
+ * 与 class（类）类似，struct 也可以包含成员变量和成员函数，但默认的访问权限是 public，而 class 的默认访问权限是 private。
+ */
+
+struct Student {
+    std::string name;
+    int age;
+
+    void study() {
+        std::cout << name << " is studying." << std::endl;
+    }
+};
+
 int main() {
 
     MyClass myObject;           // 创建 MyClass 实例
@@ -60,5 +74,11 @@ int main() {
     MyHeadClass myHeadObject;      // 创建 MyHeadClass 实例
     myHeadObject.myHeadFunction(); // 调用 MyHeadClass 的 myHeadFunction 方法
 
+    Student student;                                            // 创建 Student 实例
+    student.name = "Alice";                                     // 直接访问成员变量
+    student.age = 20;                                           // 直接访问成员变量
+    std::cout << "Student Name: " << student.name << std::endl; // 输出成员变量
+    std::cout << "Student Age: " << student.age << std::endl;
+    student.study(); // 调用成员函数
     return 0;
 }
