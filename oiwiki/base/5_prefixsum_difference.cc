@@ -88,6 +88,104 @@ void solve_eg() {
     std::cout << max_side << std::endl;
 }
 
+/**
+ * 差分
+ * 差分是一种与前缀和相对的策略，是前缀和的逆运算．
+ * 相较于给定某一序列求它的差分，竞赛中更为常见的情景是，通过维护差分序列的信息，实现多次区间修改．
+ * 在区间修改结束后，可以通过前缀和恢复原序列的信息，实现对原序列的查询．
+ * 对于序列 arr, 差分序列 diff 定义如下：diff[0] = arr[0], diff[i] = arr[i] - arr[i - 1] (i > 0)
+ * 这样，任意区间 [l, r] 的修改可以通过以下方式实现：diff[l] += val, diff[r + 1] -= val (如果 r + 1 < arr.size())
+ * 在所有修改完成后，可以通过前缀和恢复原序列：arr[i] = diff[0] + diff[1] + ... + diff[i]
+ */
+
+class Difference {
+    std::vector<int> diff_1d;
+    std::vector<std::vector<int>> diff_2d;
+
+public:
+    Difference(const std::vector<int> &arr) {
+        diff_1d.resize(arr.size());
+        diff_1d[0] = arr[0];
+        for (size_t i = 1; i < arr.size(); ++i) {
+            diff_1d[i] = arr[i] - arr[i - 1];
+        }
+    }
+
+    Difference(const std::vector<std::vector<int>> &matrix) {
+        size_t m = matrix.size();
+        size_t n = matrix[0].size();
+        diff_2d.resize(m, std::vector<int>(n));
+        for (size_t i = 0; i < m; ++i) {
+            for (size_t j = 0; j < n; ++j) {
+                diff_2d[i][j] = matrix[i][j];
+                if (i > 0) {
+                    diff_2d[i][j] -= matrix[i - 1][j];
+                }
+                if (j > 0) {
+                    diff_2d[i][j] -= matrix[i][j - 1];
+                }
+                if (i > 0 && j > 0) {
+                    diff_2d[i][j] += matrix[i - 1][j - 1];
+                }
+            }
+        }
+    }
+
+    void modify(int l, int r, int val) {
+        diff_1d[l] += val;
+        if (r + 1 < diff_1d.size()) {
+            diff_1d[r + 1] -= val;
+        }
+        /**
+         * diff_1d[l + 0] += val;
+         * diff_1d[r + 1] -= val;
+         */
+    }
+
+    void modify(int x1, int y1, int x2, int y2, int val) {
+        diff_2d[x1][y1] += val;
+        if (y2 + 1 < diff_2d[0].size()) {
+            diff_2d[x1][y2 + 1] -= val;
+        }
+        if (x2 + 1 < diff_2d.size()) {
+            diff_2d[x2 + 1][y1] -= val;
+        }
+        if (x2 + 1 < diff_2d.size() && y2 + 1 < diff_2d[0].size()) {
+            diff_2d[x2 + 1][y2 + 1] += val;
+        }
+        /**
+         * diff_2d[x1 + 0][y1 + 0] += val;
+         * diff_2d[x1 + 0][y2 + 1] -= val;
+         * diff_2d[x2 + 1][y1 + 0] -= val;
+         * diff_2d[x2 + 1][y2 + 1] += val;
+         */
+
+        /**
+         * --- 3d
+         * diff_3d[x1 + 0][y1 + 0][z1 + 0] += val;
+         * diff_3d[x1 + 0][y1 + 0][z2 + 1] -= val;
+         * diff_3d[x1 + 0][y2 + 1][z1 + 0] -= val;
+         * diff_3d[x1 + 0][y2 + 1][z2 + 1] += val;
+         * diff_3d[x2 + 1][y1 + 0][z1 + 0] -= val;
+         * diff_3d[x2 + 1][y1 + 0][z2 + 1] += val;
+         * diff_3d[x2 + 1][y2 + 1][z1 + 0] += val;
+         * diff_3d[x2 + 1][y2 + 1][z2 + 1] -= val;
+         *
+         * 观察可以 + val 的位置和 - val 的位置，发现它们在坐标上是对称的，且 + val 的位置的坐标都是偶数，而 - val 的位置的坐标都是奇数．
+         * 因此，我们可以通过枚举坐标的奇偶性来实现任意维度的差分修改．
+         * for (int x = 0; x <= 1; ++x) {
+         *     for (int y = 0; y <= 1; ++y)
+         *        for (int z = 0; z <= 1; ++z) {
+         *           int sign = (x ^ y ^ z) == 0 ? 1 : -1;
+         *           diff_3d[x1 + x][y1 + y][z1 + z] += sign * val;
+         *        }
+         *     }
+         * }
+         *
+         */
+    }
+};
+
 int main() {
     // PrefixSum::test();
     solve_eg();
