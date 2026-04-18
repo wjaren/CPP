@@ -3,7 +3,7 @@
 
 class MyHeadClass {
 public:
-    void myHeadFunction(); // 类成员函数声明
+    void myHeadFunction(); // 这里只是声明，真正定义写在 .cc 文件里。
 };
 
 #endif // MY_CLASS_H

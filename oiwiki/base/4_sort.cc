@@ -1,37 +1,42 @@
+#include <algorithm>
 #include <chrono>
 #include <ctime>
 #include <iostream>
 #include <vector>
 
-// 设计一个计数器，计算函数运行的时间
+// 用一个小工具统计排序函数耗时，并顺手检查是否真的排好序了。
 class SortTimer {
     std::string function_name;
     std::chrono::high_resolution_clock::time_point start_time;
 
-    long long duration;
-
+    long long duration{};
     bool sorted = false;
+
     bool checker(const std::vector<int> &arr) {
         for (size_t i = 1; i < arr.size(); ++i) {
             if (arr[i] < arr[i - 1]) {
-                return false; // 如果发现一个元素比前一个小，说明数组未排序
+                return false;
             }
         }
-        return true; // 数组已排序
+        return true;
     }
 
 public:
     SortTimer(void (*func)(std::vector<int> &), std::string func_name, std::vector<int> arr)
         : function_name(func_name),
           start_time(std::chrono::high_resolution_clock::now()) {
-        func(arr);             // 调用函数
-        sorted = checker(arr); // 检查排序结果
+        func(arr);
+        sorted = checker(arr);
     }
 
     ~SortTimer() {
         auto end_time = std::chrono::high_resolution_clock::now();
-        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-        std::cout << "Function " << function_name << " execution time: " << duration << " ms." << " Array sorted: " << (sorted ? "Yes" : "No") << std::endl;
+        duration =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time)
+                .count();
+        std::cout << "Function " << function_name << " execution time: "
+                  << duration << " ms."
+                  << " Array sorted: " << (sorted ? "Yes" : "No") << std::endl;
     }
 
     long long get_duration() const {
@@ -111,7 +116,7 @@ void radix_sort(std::vector<int> &arr) {
         for (size_t i = 1; i < count.size(); ++i) {
             count[i] += count[i - 1];
         }
-        for (int i = arr.size() - 1; i >= 0; --i) {
+        for (int i = static_cast<int>(arr.size()) - 1; i >= 0; --i) {
             output[--count[(arr[i] / exp) % 10]] = arr[i];
         }
         arr = output;
@@ -136,7 +141,7 @@ void quick_sort(std::vector<int> &arr) {
         dfs(left, j);
         dfs(j + 1, right);
     };
-    dfs(0, arr.size() - 1);
+    dfs(0, static_cast<int>(arr.size()) - 1);
 }
 
 void merge_sort(std::vector<int> &arr) {
@@ -161,11 +166,11 @@ void merge_sort(std::vector<int> &arr) {
         while (j <= right) {
             temp[k++] = arr[j++];
         }
-        for (int i = 0; i < temp.size(); ++i) {
-            arr[left + i] = temp[i];
+        for (int t = 0; t < static_cast<int>(temp.size()); ++t) {
+            arr[left + t] = temp[t];
         }
     };
-    dfs(0, arr.size() - 1);
+    dfs(0, static_cast<int>(arr.size()) - 1);
 }
 
 void heap_sort(std::vector<int> &arr) {
@@ -184,6 +189,7 @@ void heap_sort(std::vector<int> &arr) {
             heapify(n, largest);
         }
     };
+
     auto up = [&](this auto &&up, int n, int i) -> void {
         if (i == 0)
             return;
@@ -193,10 +199,8 @@ void heap_sort(std::vector<int> &arr) {
             up(n, parent);
         }
     };
-    int n = arr.size();
-    // for (int i = n / 2 - 1; i >= 0; --i) {
-    //     heapify(n, i);
-    // }
+
+    int n = static_cast<int>(arr.size());
     for (int i = 1; i < n; ++i) {
         up(n, i);
     }
@@ -207,7 +211,7 @@ void heap_sort(std::vector<int> &arr) {
 }
 
 void bucket_sort(std::vector<int> &arr) {
-    int bucket_size = 10; // 桶的大小
+    int bucket_size = 10; // 每个桶负责一个数值范围。
     int max_val = *std::max_element(arr.begin(), arr.end());
     std::vector<std::vector<int>> buckets(max_val + 1);
     for (int num : arr) {
@@ -239,56 +243,27 @@ void shell_sort(std::vector<int> &arr) {
 }
 
 int main() {
-
     std::vector<int> arr;
-    random_fill(arr, 100'000); // 填充数组
+    random_fill(arr, 100'000);
 
     if (arr.size() <= 50'000) {
-        // n^2 复杂度的排序算法
-        {
-            SortTimer timer(selection_sort, "Selection Sort", arr);
-        }
-
-        {
-            SortTimer timer(bubble_sort, "Bubble Sort", arr);
-        }
-
-        {
-            SortTimer timer(insertion_sort, "Insertion Sort", arr);
-        }
+        // 这几种是 O(n^2)，数据大时会明显慢很多。
+        { SortTimer timer(selection_sort, "Selection Sort", arr); }
+        { SortTimer timer(bubble_sort, "Bubble Sort", arr); }
+        { SortTimer timer(insertion_sort, "Insertion Sort", arr); }
     }
 
     if (arr.size() <= 1'000'000) {
-        // nlogn 复杂度的排序算法
-        {
-            SortTimer timer(quick_sort, "Quick Sort", arr);
-        }
-
-        {
-            SortTimer timer(merge_sort, "Merge Sort", arr);
-        }
-
-        {
-            SortTimer timer(heap_sort, "Heap Sort", arr);
-        }
+        // 这几种通常是 O(n log n)，更适合大一点的数据。
+        { SortTimer timer(quick_sort, "Quick Sort", arr); }
+        { SortTimer timer(merge_sort, "Merge Sort", arr); }
+        { SortTimer timer(heap_sort, "Heap Sort", arr); }
     }
 
-    {
-        SortTimer timer(bucket_sort, "Bucket Sort", arr);
-    }
-
-    {
-        SortTimer timer(shell_sort, "Shell Sort", arr);
-    }
-
-    // 线性时间复杂度的排序算法
-    {
-        SortTimer timer(count_sort, "Count Sort", arr);
-    }
-
-    {
-        SortTimer timer(radix_sort, "Radix Sort", arr);
-    }
+    { SortTimer timer(bucket_sort, "Bucket Sort", arr); }
+    { SortTimer timer(shell_sort, "Shell Sort", arr); }
+    { SortTimer timer(count_sort, "Count Sort", arr); }
+    { SortTimer timer(radix_sort, "Radix Sort", arr); }
 
     return 0;
 }
